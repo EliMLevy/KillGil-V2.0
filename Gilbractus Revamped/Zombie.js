@@ -5,7 +5,7 @@ class Zombie {
         this.angle = 0;
         this.vel = createVector(0, 0);
         this.acc = createVector(0, 0);
-        this.maxSpeed = 3;
+        this.maxSpeed = this.scl * 0.15;
     }
 
     display() {
@@ -61,7 +61,7 @@ class Zombie {
         let d = Math.sqrt(Math.pow(dir.x, 2) + Math.pow(dir.y, 2));
 
         dir.normalize();
-        dir.mult(map(d, 0, this.scl / 1.2, 0, this.maxSpeed));
+        dir.mult(map(d, this.scl, 0, 0, this.maxSpeed));
 
         if (d < this.scl / 1.2) {
             this.vel.add(dir);
