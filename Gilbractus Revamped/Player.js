@@ -15,41 +15,45 @@ class Player {
     }
 
     display(ctx) {
-        ctx.save();
+
+        ctx.save(); //Push the matrix
+
         ctx.translate(this.pos.x, this.pos.y);
         ctx.rotate(this.angle);
 
         ctx.fillStyle = 'black';
+
+        //Arms
         ctx.fillRect(0, this.scl * -0.25, this.scl * 0.4, this.scl * 0.15);
-        // if(!this.weapon) {
         ctx.fillRect(0, this.scl * 0.25, this.scl * 0.4, this.scl * -0.15);
-        // }
+
         ctx.strokeStyle = 'black';
         ctx.fillStyle = 'rgb(0,0,255)';
-        // ctx.fillRect(0,0,this.scl,this.scl);
+
+        //Head
         ctx.beginPath();
         ctx.arc(0, 0, this.scl * 0.25, 0, Math.PI * 2);
         ctx.closePath();
+
         ctx.fill();
         ctx.stroke();
 
-        
+        ctx.restore(); //Pop the matrix
 
-        ctx.restore();
         if (this.weapon != undefined) {
             this.weapon.display(ctx, this.pos.x + Math.cos(this.angle + 0.3) * this.scl * 0.2, this.pos.y + Math.sin(this.angle + 0.3) * this.scl * 0.2, this.angle);
+
         }
 
     }
 
     update() {
-
+        //Turn towards the mouse
         let mouse = createVector(mouseX, mouseY);
         mouse.sub(this.pos);
-
         this.angle = mouse.heading();
-        // console.log(this.angle);
 
+        //These variables are initialized in the init()
         if (this.left)
             this.pos.x -= this.speed;
         if (this.right)
@@ -59,25 +63,21 @@ class Player {
         if (this.down)
             this.pos.y += this.speed;
 
-        if (this.pos.x > width) {
+        //Constrain pos to the canvas
+        if (this.pos.x > width) 
             this.pos.x = width;
-        }
-        if (this.pos.x < 0) {
+        if (this.pos.x < 0) 
             this.pos.x = 0;
-        }
-        if (this.pos.y > height) {
+        if (this.pos.y > height) 
             this.pos.y = height;
-        }
-        if (this.pos.y < 0) {
+        if (this.pos.y < 0) 
             this.pos.y = 0;
-        }
+
 
         if (this.weapon) {
             this.weapon.update();
-            // console.log(this.shooting);
-            if (this.shooting) {
+            if (this.shooting) { 
                 this.weapon.fire();
-                // console.log("firing");
             }
         }
 
