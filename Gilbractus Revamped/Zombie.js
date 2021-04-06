@@ -6,33 +6,51 @@ class Zombie {
 
         this.vel = createVector(0, 0);
         this.maxSpeed = this.scl * 0.05;
+
+        this.health = 50;
     }
 
     display() {
-        ctx.save(); //Push the matrix
+        if(!this.dead) {
+            ctx.save(); //Push the matrix
+    
+            ctx.translate(this.pos.x, this.pos.y);
+           
+            ctx.fillStyle = 'red';
+            ctx.strokeStyle = 'black';
 
-        ctx.translate(this.pos.x, this.pos.y);
-        ctx.rotate(this.angle);
+            ctx.fillRect(this.scl * -0.5, this.scl * -0.4,map(this.health,0,50,0,this.scl * 1), this.scl * 0.15 );
+            ctx.strokeRect(this.scl * -0.5, this.scl * -0.4,this.scl * 1, this.scl * 0.15 )
+            ctx.rotate(this.angle);
+            
 
-        ctx.fillStyle = 'black';
+            ctx.fillStyle = 'black';
+    
+            //Arms
+            ctx.fillRect(0, this.scl * -0.25, this.scl * 0.4, this.scl * 0.15);
+            ctx.fillRect(0, this.scl * 0.25, this.scl * 0.4, this.scl * -0.15);
+    
+            ctx.fillStyle = 'green';
+    
+            //Head
+            ctx.beginPath();
+            ctx.arc(0, 0, this.scl * 0.25, 0, Math.PI * 2);
+            ctx.closePath();
+            
+            ctx.fill();
+            
+            ctx.restore(); //Pop the matrix
 
-        //Arms
-        ctx.fillRect(0, this.scl * -0.25, this.scl * 0.4, this.scl * 0.15);
-        ctx.fillRect(0, this.scl * 0.25, this.scl * 0.4, this.scl * -0.15);
-
-        ctx.fillStyle = 'green';
-
-        //Head
-        ctx.beginPath();
-        ctx.arc(0, 0, this.scl * 0.25, 0, Math.PI * 2);
-        ctx.closePath();
-        
-        ctx.fill();
-        
-        ctx.restore(); //Pop the matrix
+        }
     }
 
     update() {
+        //make sure he is alive
+        if(this.health < 0) {
+            this.dead = true;
+            return;
+        }
+
         this.pos.add(this.vel);
         this.vel.mult(0); //Zero the velocity becuase the streering and avoiding behaviors are additive
 
@@ -69,10 +87,26 @@ class Zombie {
             this.vel.add(dir);
         } 
     }
+
+    hitBy(bullet) {
+        let d = dist(this.pos.x,this.pos.y,bullet.pos.x,bullet.pos.y);
+        if(d < this.scl * 0.25 +  this.scl * 0.1) { //Sum of bullet and zombie radii
+            this.health -= bullet.damage;
+            return true;
+        }
+        return false
+    }
 }
 
 function map(x, min, max, newMin, newMax) {
     let slope = (newMax - newMin) / (max - min);
     output = newMin + slope * (x - min)
     return output;
+}
+
+function dist(x1,y1,x2,y2) {
+    let dx = x2 - x1;
+    let dy = y2 - y1;
+
+    return Math.sqrt(Math.pow(dx,2) + Math.pow(dy,2));
 }

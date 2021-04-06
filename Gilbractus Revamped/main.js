@@ -33,17 +33,34 @@ function animate() {
     p.update();
     
     //Zombie animation
-    for (let i = 0; i < zombies.length; i++) {
+    for (let i = zombies.length - 1; i >= 0; i--) {
         const z = zombies[i];
+        
+        //check if he is still alive
+        if(z.dead) {
+            zombies.splice(i,1);
+        }
+
+
         z.display();
         z.update();
+
         //Player seeking behavior 
         // @TODO add probabilistic steering to navigate around boundaries 
         z.seek(createVector(p.pos.x,p.pos.y)); 
+
         //Anti clumping behavior
         for (let j = 0; j < zombies.length; j++) {
             const other = zombies[j];
             z.avoid(createVector(other.pos.x,other.pos.y));
+        }
+
+        //Check for bullet collisions
+        for (let j = p.weapon.bullets.length - 1; j >= 0; j--) {
+            const b = p.weapon.bullets[j];
+            if(z.hitBy(b)) {
+                p.weapon.bullets.splice(j,1);
+            }
         }
     }
 
