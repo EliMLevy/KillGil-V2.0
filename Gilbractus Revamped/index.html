@@ -12,9 +12,55 @@
 </head>
 
 <body>
-    <canvas id="main-canvas">
-
+    <canvas id="main-canvas"></canvas>
+    <canvas id="player-status">
     </canvas>
+    <!-- <div id="status">
+        <h1>Player Status</h1>
+        <ul>
+            <li>
+                <h3>Health:</h3>
+            </li>
+            <li>
+                <h3>Ammo:</h3>
+            </li>
+            <li>
+                <h3>Armor:</h3>
+            </li>
+            <li>
+                <h3>Fire Rate:</h3>
+            </li>
+            <li>
+                <h3>Walk Speed:</h3>
+            </li>
+        </ul>
+    
+
+        <h1>Statistics</h1>
+        <ul id="player-stats">
+            <li>
+                <h3>Kills:</h3>
+            </li>
+            <li>
+                <h3>Deaths:</h3>
+            </li>
+            <li>
+                <h3>Kill/Death ratio:</h3>
+            </li>
+            <li>
+                <h3>Shots Fires:</h3>
+            </li>
+            <li>
+                <h3>Shots landed:</h3>
+            </li>
+            <li>
+                <h3>Accuracy:</h3>
+            </li>
+            <li>
+                <h3>Damage done:</h3>
+            </li>
+        </ul>
+    </div> -->
     <script>
         let mouseTracker = document.getElementById('main-canvas');
         let mouseX = 0;
@@ -28,11 +74,17 @@
         
     </script>
     <!-- <canvas id="leaderboard"></canvas> -->
+    
+    
     <script src="Vector.js"></script>
     <script src="Zombie.js"></script>
     <script src="Player.js"></script>
     <script src="Gun.js"></script>
+    <script src="./Status.js"></script>
     <script src="main.js"></script>
+
+
+    
 </body>
 
 </html>

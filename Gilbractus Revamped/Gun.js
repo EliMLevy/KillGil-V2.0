@@ -4,8 +4,10 @@ class Gun {
         this.angle;
 
         this.bullets = []; //These are the fired bullets
-        this.ammoCount = 50; //Ammo avaliable
-        this.reloadTime = 1000;
+        this.maxAmmo = 50;
+        this.ammoCount = this.maxAmmo; //Ammo avaliable
+        this.reloadTime = 100;
+        this.reloading = false;
         this.BPS = 5; //Cooldown between shots
         this.timer = -1; //used for fire and reload cooldown
         this.scl = scl;
@@ -40,6 +42,23 @@ class Gun {
         ctx.restore(); //Pop matrix
 
 
+        //Draw ammo indicator around mouse
+        ctx.beginPath();
+        ctx.arc(mouseX,mouseY,scl / 6,0,map(this.ammoCount,0,this.maxAmmo,0,2 * Math.PI),false); 
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = 'black'
+        // ctx.closePath();
+        ctx.stroke();
+        ctx.lineWidth = 1;
+
+        // ctx.beginPath();
+        // ctx.arc(mouseX, mouseY, scl / 6, 0, Math.PI, false);
+        // ctx.lineWidth = 5;
+        // // line color
+        // ctx.strokeStyle = 'green';
+        // ctx.stroke();
+
+
     }
 
     update() {
@@ -53,10 +72,20 @@ class Gun {
                 this.bullets.splice(i, 1);
             }
         }
+        if (this.timer >= -1) {
+            this.timer--;
+            if(this.reloading) {
+                this.ammoCount = map(this.timer, this.reloadTime, 0,0, this.maxAmmo);
+                // console.log('reloading');
+            }
+        } else if (this.reloading) {
+            this.ammoCount = this.maxAmmo;
+            this.reloading = false;
+        }
     }
 
     fire() {
-        if (this.timer < 0 && this.ammoCount > 0) {
+        if (this.timer < 0 && this.ammoCount > 0 && !this.reloading) {
             //Location where the bullet gets initialized
             let gunEnd = createVector(this.pos.x + Math.cos(this.angle + 0.1) * this.scl,
                 this.pos.y + Math.sin(this.angle + 0.1) * this.scl);
@@ -71,10 +100,11 @@ class Gun {
             this.timer = this.BPS; //Reset cooldown timer
             this.ammoCount--;
         }
+    }
 
-        if (this.timer >= -1) {
-            this.timer--;
-        }
+    reload() {
+        this.timer = this.reloadTime;
+        this.reloading = true;
     }
 
 

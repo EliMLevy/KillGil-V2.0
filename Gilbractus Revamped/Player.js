@@ -11,6 +11,8 @@ class Player {
         this.weapon;
         this.shooting = false;
 
+        this.armor = 0.01;
+
         this.health = 100;
     }
 
@@ -116,6 +118,10 @@ class Player {
             }
             if (e.key == 'd') {
                 this.right = false;
+            }
+            if(e.key == ' ') {
+                this.weapon.reload();
+                console.log('reload triggered');
             }
         })
 

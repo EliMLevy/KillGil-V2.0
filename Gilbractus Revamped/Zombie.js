@@ -7,6 +7,10 @@ class Zombie {
         this.vel = createVector(0, 0);
         this.maxSpeed = this.scl * 0.05;
 
+        this.damage = 1;
+        this.attackCooldown = 50;
+        this.timer = 50;
+
         this.health = 50;
     }
 
@@ -51,6 +55,10 @@ class Zombie {
             return;
         }
 
+        if(this.timer >= 0) {
+            this.timer--;
+        }
+
         this.pos.add(this.vel);
         this.vel.mult(0); //Zero the velocity becuase the streering and avoiding behaviors are additive
 
@@ -67,8 +75,15 @@ class Zombie {
         dir.normalize();
         dir.mult(this.maxSpeed);
 
-        if (d > this.scl / 2) {
+        if (d > this.scl / 1.8) {
             this.vel.add(dir);
+            return false;
+        } else {
+            if(this.timer < 0) {
+                this.timer += this.attackCooldown;
+                return true;
+            }
+            return false;
         }
 
     }
