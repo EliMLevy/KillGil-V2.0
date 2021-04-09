@@ -4,7 +4,7 @@ class Player {
         this.pos = createVector(x, y);
         this.angle = 0;
 
-        this.speed = this.scl * 0.1;
+        this.speed = this.scl * 0.06;
 
         this.initControls();
 
@@ -14,6 +14,8 @@ class Player {
         this.armor = 0.01;
 
         this.health = 100;
+
+        this.entering = false;
     }
 
     display(ctx) {
@@ -66,14 +68,14 @@ class Player {
             this.pos.y += this.speed;
 
         //Constrain pos to the canvas
-        if (this.pos.x > width) 
-            this.pos.x = width;
-        if (this.pos.x < 0) 
-            this.pos.x = 0;
-        if (this.pos.y > height) 
-            this.pos.y = height;
-        if (this.pos.y < 0) 
-            this.pos.y = 0;
+        if (this.pos.x > width - wallThickness) 
+            this.pos.x = width - wallThickness;
+        if (this.pos.x < 0 + wallThickness) 
+            this.pos.x = 0 + wallThickness;
+        if (this.pos.y > height - wallThickness) 
+            this.pos.y = height - wallThickness;
+        if (this.pos.y < 0 + wallThickness) 
+            this.pos.y = 0 + wallThickness;
 
 
         if (this.weapon) {
@@ -104,6 +106,9 @@ class Player {
             if (e.key == 'd') {
                 this.right = true;
             }
+            if(e.key == 'Enter') {
+                this.entering = true;
+            }
         })
 
         window.addEventListener('keyup', (e) => {
@@ -121,7 +126,9 @@ class Player {
             }
             if(e.key == ' ') {
                 this.weapon.reload();
-                console.log('reload triggered');
+            }
+            if(e.key == 'Enter') {
+                this.entering = false;
             }
         })
 
