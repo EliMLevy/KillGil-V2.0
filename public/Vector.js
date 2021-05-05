@@ -46,4 +46,16 @@ class Vector {
         return Math.atan2(this.y, this.x);
 
     }
+
+    rotate(angle) {
+        /*
+        rotation matrix
+        cos(a) -sin(a)
+        sin(a) cos(a)
+        */
+        let tempX = this.x;
+        let tempY = this.y;
+        this.x = tempX * Math.cos(angle) + tempY * -Math.sin(angle);
+        this.y = tempX * Math.sin(angle) +tempY * Math.cos(angle);
+    }
 }

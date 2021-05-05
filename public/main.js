@@ -120,6 +120,16 @@ document.addEventListener('mousemove', (event) => {
     mouseY = event.y;
 })
 
+document.addEventListener('mousedown', () => {
+    p.shooting = true;
+})
+
+document.addEventListener('mouseup', () => {
+    p.shooting = false;
+})
+
+
+
 function animate() {
 
     ctx.fillStyle = 'rgb(199,199,199)';
@@ -128,6 +138,12 @@ function animate() {
 
     p.display(ctx,0,0);
     p.update();
+
+    for(let b of p.gun.bullets) {
+        console.log(b);
+        b.display(ctx, xOff, yOff);
+        b.update();
+    }
 
     otherPlayers.forEach((key, value) => {
         // console.log(key + " = " + value)

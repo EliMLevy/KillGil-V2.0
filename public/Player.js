@@ -11,6 +11,9 @@ class Player {
         this.col = [Math.random() * 255, Math.random() * 255, Math.random() * 255];
 
         // this.primary = primary;
+
+        this.gun = new Gun(this.scl);
+        this.shooting = false;
     }
 
     display(ctx, xOff, yOff) {
@@ -36,9 +39,13 @@ class Player {
         ctx.fill();
         ctx.stroke();
 
+        ctx.fillStyle = 'white';
+        this.gun.display(ctx, scl / 7,scl / 9);
+        
         ctx.restore(); //Pop the matrix
+        
 
-
+        // this.gun.runBulletSystem(ctx);
 
     }
 
@@ -46,6 +53,13 @@ class Player {
         let mouse = createVector(mouseX,mouseY);
         mouse.sub(this.pos);
         this.angle = mouse.heading();
+
+        if(this.shooting) {
+            this.gun.shoot(this.relativePos.x,this.relativePos.y,this.angle);
+        }
+
+        this.gun.update();
+
     }
 
     canMove(mapKey, dx, dy) {
@@ -60,10 +74,8 @@ class Player {
             y: Math.floor(newPos.y / this.scl)
         }
         if(mapKey[index.y][index.x] == 0) {
-            // console.log("GREEN")
             return true;
         } else {
-            // console.log("RED")
             return false;
         }
         
