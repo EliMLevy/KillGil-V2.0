@@ -2,8 +2,11 @@ const express = require('express');
 
 const app = express();
 
-const server = app.listen(3000, ()=> {
-    console.log('server is listening on port 3000');
+var port = process.env.PORT || 3000;
+
+
+const server = app.listen(port, ()=> {
+    console.log('server is listening on port ' + port);
 })
 
 
