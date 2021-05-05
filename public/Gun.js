@@ -5,7 +5,7 @@ class Gun {
 
         this.damage = 5;
 
-        this.shotCooldown = 10;
+        this.shotCooldown = 5;
         this.reloadCooldown = 200;
         this.timer = 0;
 
@@ -32,17 +32,24 @@ class Gun {
     }
 
 
-    shoot(x,y,a) {
+    shoot(x,y,a,socket) {
         // let posX = x + this.scl / 4 + this.scl / 13 + Math.cos(a) * 10;
         // let posY = y + this.scl / 100 + this.scl / 40 + Math.sin(a) * 10;
         if(this.timer <= 0) {
-            let bulletPos = createVector(Math.cos(a) * scl / 1.8,Math.sin(a) * scl / 1.8);
-            bulletPos.rotate(Math.PI/12);
-            let posX = x + bulletPos.x;
-            let posY = y + bulletPos.y;
-            this.bullets.push(new Bullet(posX,posY ,Math.cos(a) * 15, Math.sin(a) * 15, this.scl));
+            let posX = x + Math.cos(a + Math.PI/12) * scl / 1.8;
+            let posY = y + Math.sin(a + Math.PI/12) * scl / 1.8;
+            this.bullets.push(new Bullet(posX,posY ,Math.cos(a) * 25, Math.sin(a) * 25, this.scl));
             this.timer = this.shotCooldown;
+
+            let data = {
+                x:posX,
+                y:posY,
+                vx:Math.cos(a) * 25,
+                vy:Math.sin(a) * 25
+            }
+            socket.emit('shot-fired', data);
         } 
+
     }
 
     update() {

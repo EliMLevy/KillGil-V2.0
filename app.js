@@ -35,6 +35,12 @@ io.on('connection', (socket) => {
 
       });
 
+      socket.on('shot-fired', (data) => {
+        data.id = socket.id;
+        socket.broadcast.emit('shot-fired', data);
+
+      });
+
     socket.on('disconnect', () => {
       console.log('user disconnected');
       players.splice(players.indexOf(socket.id),1);

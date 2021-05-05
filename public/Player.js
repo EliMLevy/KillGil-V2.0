@@ -49,13 +49,14 @@ class Player {
 
     }
 
-    update() {
+    update(socket) {
         let mouse = createVector(mouseX,mouseY);
         mouse.sub(this.pos);
         this.angle = mouse.heading();
 
         if(this.shooting) {
-            this.gun.shoot(this.relativePos.x,this.relativePos.y,this.angle);
+            this.gun.shoot(this.relativePos.x,this.relativePos.y,this.angle,socket);
+
         }
 
         this.gun.update();
