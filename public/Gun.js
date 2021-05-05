@@ -1,7 +1,7 @@
 class Gun {
     constructor(scl) {
 
-        this.bullets = [];
+        this.bullets = new Map();
 
         this.damage = 5;
 
@@ -15,6 +15,8 @@ class Gun {
             x:0,
             y:0
         }
+
+        
     }
 
     display(ctx, x, y) {
@@ -38,14 +40,16 @@ class Gun {
         if(this.timer <= 0) {
             let posX = x + Math.cos(a + Math.PI/12) * scl / 1.8;
             let posY = y + Math.sin(a + Math.PI/12) * scl / 1.8;
-            this.bullets.push(new Bullet(posX,posY ,Math.cos(a) * 25, Math.sin(a) * 25, this.scl));
+            let b = new Bullet(posX,posY ,Math.cos(a) * 25, Math.sin(a) * 25, this.scl)
+            this.bullets.set(b.id, b);
             this.timer = this.shotCooldown;
 
             let data = {
                 x:posX,
                 y:posY,
                 vx:Math.cos(a) * 25,
-                vy:Math.sin(a) * 25
+                vy:Math.sin(a) * 25,
+                bulletId: b.id
             }
             socket.emit('shot-fired', data);
         } 
@@ -57,12 +61,6 @@ class Gun {
             this.timer--;
         }
     }
-    // runBulletSystem(ctx) {
-    //     for(let b of this.bullets) {
-    //         b.display(ctx);
-    //         b.update();
-    //     }
-    // }
 }
 
 
@@ -72,6 +70,8 @@ class Bullet{
         this.vel = createVector(vx,vy);
 
         this.scl = 100;
+
+        this.id = this.generateID();
     }
 
     display(ctx, xOff, yOff) {
@@ -86,5 +86,15 @@ class Bullet{
 
     update() {
         this.pos.add(this.vel);
+    }
+
+    generateID() {
+        let alphabet = ['a','b','c','d','e','f','g',1,2,3,4,5,6,7,8,9];
+        let result = "";
+        for(let i = 0; i < 10; i++) {
+            result += alphabet[Math.floor(Math.random() * alphabet.length)];
+        }
+
+        return result;
     }
 }

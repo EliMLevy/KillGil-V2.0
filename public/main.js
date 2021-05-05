@@ -35,7 +35,7 @@ let mapKey = [
 ]
 
 let p = new Player(width / 2, height / 2, scl);
-let globalBullets = [];
+let globalBullets = new Map();
 
 let xOff = 0;
 let yOff = 0;
@@ -99,7 +99,6 @@ socket.on('player-left', (obj) => {
     //Message received when a new player joins
     //Client must make a new player object for him
     let id = obj.id;
-    // let player = otherPlayers.get(id);
     otherPlayers.delete(id);
     console.log(otherPlayers);
 })
@@ -110,13 +109,17 @@ socket.on('movement', (data) => {
     player.pos.x = data.x;
     player.pos.y = data.y;
     player.angle = data.a;
-    // console.log("new player: " + otherPlayers.get(id));
 })
 
 socket.on('shot-fired', (data) => {
-    let id = data.id;
-    globalBullets.push(new Bullet(data.x, data.y, data.vx, data.vy, scl));
-    // console.log("new player: " + otherPlayers.get(id));
+    globalBullets.set(data.bulletId, new Bullet(data.x, data.y, data.vx, data.vy, scl));
+})
+
+socket.on('shot-landed', (data) => {
+    // console.log("player hit by bullet: " + globalBullets.get(data.bulletId))
+    globalBullets.delete(data.bulletId);
+    p.gun.bullets.delete(data.bulletId);
+
 })
 
 var mouseX = undefined;
@@ -148,38 +151,42 @@ function animate() {
     p.update(socket);
 
     otherPlayers.forEach((key, value) => {
-        // console.log(key + " = " + value)
         key.display(ctx, xOff, yOff);
     })
-    for (let i = p.gun.bullets.length - 1; i >= 0; i--) {
-        let b = p.gun.bullets[i];
-        // console.log(b);
+
+    p.gun.bullets.forEach((key,value) => {
+        let b = key;
         b.display(ctx, xOff, yOff);
         b.update();
-
+    
         //Check for bllet collisions
         if (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)] == 1) {
-            p.gun.bullets.splice(i, 1);
-
-            // console.log(p.gun.bullets.length);
+            p.gun.bullets.delete(value);
+    
         }
 
+    })
+   
 
-    }
-
-    for (let i = globalBullets.length - 1; i >= 0; i--) {
-        let b = globalBullets[i];
+    
+    globalBullets.forEach((key,value) => {
+        let b = key;
         b.display(ctx, xOff, yOff);
         b.update(socket);
 
+
         //Check for bllet collisions
         if (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)] == 1) {
-            globalBullets.splice(i, 1);
+            globalBullets.delete(value);
 
-            // console.log(p.gun.bullets.length);
         }
 
-    }
+        if(Math.pow(b.pos.x - p.relativePos.x,2) + Math.pow(b.pos.y - p.relativePos.y,2) < Math.pow(scl / 5, 2)) {
+            socket.emit("shot-landed", {bulletId:value});
+            globalBullets.delete(value);
+        }
+    })
+
 
 
     for (let i = 0; i < mapKey.length; i++) {
@@ -221,8 +228,6 @@ function animate() {
     socket.emit('movement', data);
 
 
-
-    // console.log(Math.floor(p.relativePos.x / scl),Math.floor(p.relativePos.y / scl));
     requestAnimationFrame(animate);
 }
 
