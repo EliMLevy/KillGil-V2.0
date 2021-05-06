@@ -65,13 +65,15 @@ class Gun {
 
 
 class Bullet{
-    constructor(x,y,vx,vy,scl) {
+    constructor(x,y,vx,vy,scl,shooterId) {
         this.pos = createVector(x,y);
         this.vel = createVector(vx,vy);
 
         this.scl = 100;
 
         this.id = this.generateID();
+
+        this.shooter = shooterId;
     }
 
     display(ctx, xOff, yOff) {

@@ -46,6 +46,13 @@ io.on('connection', (socket) => {
 
   });
 
+  socket.on('death', (data) => {
+    data.id = socket.id;
+    socket.broadcast.emit('death', data);
+    io.emit("new-kill", data);
+    // io.to(data.shooter).emit("new-kill");
+  });
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
     players.splice(players.indexOf(socket.id), 1);

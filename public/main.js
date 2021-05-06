@@ -109,10 +109,11 @@ socket.on('movement', (data) => {
     player.pos.x = data.x;
     player.pos.y = data.y;
     player.angle = data.a;
+    player.health = data.h;
 })
 
 socket.on('shot-fired', (data) => {
-    globalBullets.set(data.bulletId, new Bullet(data.x, data.y, data.vx, data.vy, scl));
+    globalBullets.set(data.bulletId, new Bullet(data.x, data.y, data.vx, data.vy, scl,data.id));
 })
 
 socket.on('shot-landed', (data) => {
@@ -120,6 +121,23 @@ socket.on('shot-landed', (data) => {
     globalBullets.delete(data.bulletId);
     p.gun.bullets.delete(data.bulletId);
 
+})
+
+socket.on('death', (data) => {
+    // console.log("player hit by bullet: " + globalBullets.get(data.bulletId))
+    let player = otherPlayers.get(data.id);
+    player.relativePos.x = 0;
+    player.relativePos.y = 0;
+
+})
+
+socket.on('new-kill', (data) => {
+    // console.log("player hit by bullet: " + globalBullets.get(data.bulletId))
+    if(otherPlayers.get(data.shooter)) {
+        otherPlayers.get(data.shooter).score++;
+    } else {
+        p.score++;
+    }
 })
 
 var mouseX = undefined;
@@ -184,6 +202,17 @@ function animate() {
         if(Math.pow(b.pos.x - p.relativePos.x,2) + Math.pow(b.pos.y - p.relativePos.y,2) < Math.pow(scl / 5, 2)) {
             socket.emit("shot-landed", {bulletId:value});
             globalBullets.delete(value);
+            p.health -= 5;
+
+            if(p.health <= 0) {
+                p.relativePos.x = width/2;
+                p.relativePos.y = height/2;
+                p.health = 100;
+                xOff = 0;
+                yOff = 0;
+        
+                socket.emit('death',{shooter:b.shooter});
+            }
         }
     })
 
@@ -222,7 +251,8 @@ function animate() {
     let data = {
         x: p.relativePos.x,
         y: p.relativePos.y,
-        a: p.angle
+        a: p.angle,
+        h: p.health
     }
 
     socket.emit('movement', data);

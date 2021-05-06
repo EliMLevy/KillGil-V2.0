@@ -10,16 +10,33 @@ class Player {
 
         this.col = [Math.random() * 255, Math.random() * 255, Math.random() * 255];
 
+        this.health = 100;
+
         // this.primary = primary;
 
         this.gun = new Gun(this.scl);
         this.shooting = false;
+
+        this.score = 0;
     }
 
     display(ctx, xOff, yOff) {
         ctx.save(); //Push the matrix
 
         ctx.translate(this.pos.x + xOff, this.pos.y + yOff);
+
+        //Health bar (must be done before rotatoin)
+        if(this.health > 20) {
+            ctx.fillStyle = "green";
+        } else {
+            ctx.fillStyle = "red";
+        }
+
+        ctx.fillRect(-this.scl / 4, -this.scl / 2.3, map(this.health, 0, 100, 0, this.scl / 2), this.scl / 7);
+        ctx.strokeRect(-this.scl / 4, -this.scl / 2.3, this.scl / 2, this.scl / 7);
+
+
+        
         ctx.rotate(this.angle);
 
         ctx.fillStyle = 'black';
@@ -27,9 +44,9 @@ class Player {
         //Arms
         ctx.fillRect(0, this.scl * -0.20, this.scl * 0.25, this.scl * 0.10);
         ctx.fillRect(0, this.scl * 0.20, this.scl * 0.25, this.scl * -0.10);
-
         ctx.strokeStyle = 'black';
         ctx.fillStyle = `rgb(${this.col[0]},${this.col[1]},${this.col[2]})`;
+
 
         //Head
         ctx.beginPath();
@@ -44,8 +61,10 @@ class Player {
         
         ctx.restore(); //Pop the matrix
         
-
-        // this.gun.runBulletSystem(ctx);
+        ctx.fillStyle = 'black';
+        ctx.font = '28px serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(this.score,this.pos.x + xOff, this.pos.y + yOff + scl / 9);
 
     }
 
@@ -60,6 +79,8 @@ class Player {
         }
 
         this.gun.update();
+
+        
 
     }
 
@@ -82,4 +103,11 @@ class Player {
         
     }
 
+}
+
+function map(n, min, max, start, end) {
+    let numerator = end * (n - min) + start * (max - n);
+    let denom = max - min;
+
+    return numerator / denom;
 }
