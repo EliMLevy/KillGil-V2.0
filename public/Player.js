@@ -1,8 +1,8 @@
 class Player {
     constructor(x,y,scl,primary) {
         this.pos = createVector(x,y);
-        this.relativePos = createVector(x,y); //RElative to the world grid
         this.scl = scl;
+        this.relativePos = createVector(x - this.scl * 3,y - this.scl); //RElative to the world grid
 
         this.speed = scl / 10;
 
@@ -62,7 +62,7 @@ class Player {
         ctx.restore(); //Pop the matrix
         
         ctx.fillStyle = 'black';
-        ctx.font = '28px serif';
+        ctx.font = `${this.scl / 4}px serif`;
         ctx.textAlign = 'center';
         ctx.fillText(this.score,this.pos.x + xOff, this.pos.y + yOff + scl / 9);
 
@@ -95,7 +95,7 @@ class Player {
             x: Math.floor(newPos.x / this.scl),
             y: Math.floor(newPos.y / this.scl)
         }
-        if(mapKey[index.y][index.x] == 0) {
+        if(mapKey[index.y][index.x] != 1) {
             return true;
         } else {
             return false;

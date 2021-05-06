@@ -13,32 +13,34 @@ var socket = io();
 
 let mapKey = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 2, 2, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1],
+    [1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
+    [1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1],
+    [1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1],
+    [1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1],
+    [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+    [1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
+    [1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1],
+    [1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1],
+    [1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
 ]
+
 
 let p = new Player(width / 2, height / 2, scl);
 let globalBullets = new Map();
 
-let xOff = 0;
-let yOff = 0;
+let xOff = scl * 3;
+let yOff = scl;
 
 let keys = {
     w: false,
@@ -113,7 +115,7 @@ socket.on('movement', (data) => {
 })
 
 socket.on('shot-fired', (data) => {
-    globalBullets.set(data.bulletId, new Bullet(data.x, data.y, data.vx, data.vy, scl,data.id));
+    globalBullets.set(data.bulletId, new Bullet(data.x, data.y, data.vx, data.vy, scl, data.id));
 })
 
 socket.on('shot-landed', (data) => {
@@ -133,7 +135,7 @@ socket.on('death', (data) => {
 
 socket.on('new-kill', (data) => {
     // console.log("player hit by bullet: " + globalBullets.get(data.bulletId))
-    if(otherPlayers.get(data.shooter)) {
+    if (otherPlayers.get(data.shooter)) {
         otherPlayers.get(data.shooter).score++;
     } else {
         p.score++;
@@ -164,6 +166,20 @@ function animate() {
     ctx.fillRect(0, 0, width, height);
     ctx.fill();
 
+    for (let i = 0; i < mapKey.length; i++) {
+        const row = mapKey[i];
+        for (let j = 0; j < row.length; j++) {
+            const element = row[j];
+            if (element == 1) {
+                ctx.fillStyle = "black";
+            } else if(element == 2) {
+                ctx.fillStyle = 'rgb(0,255,0)';
+            } else if(element == 0) {
+                ctx.fillStyle = 'rgb(199,199,199)';
+            }
+            ctx.fillRect(j * scl + xOff, i * scl + yOff, scl, scl);
+        }
+    }
 
     p.display(ctx, 0, 0);
     p.update(socket);
@@ -172,62 +188,52 @@ function animate() {
         key.display(ctx, xOff, yOff);
     })
 
-    p.gun.bullets.forEach((key,value) => {
+    p.gun.bullets.forEach((key, value) => {
         let b = key;
         b.display(ctx, xOff, yOff);
         b.update();
-    
+
         //Check for bllet collisions
-        if (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)] == 1) {
+        if (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)] > 0) {
             p.gun.bullets.delete(value);
-    
+
         }
 
     })
-   
 
-    
-    globalBullets.forEach((key,value) => {
+
+
+    globalBullets.forEach((key, value) => {
         let b = key;
         b.display(ctx, xOff, yOff);
         b.update(socket);
 
 
         //Check for bllet collisions
-        if (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)] == 1) {
+        if (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)] > 0) {
             globalBullets.delete(value);
 
         }
 
-        if(Math.pow(b.pos.x - p.relativePos.x,2) + Math.pow(b.pos.y - p.relativePos.y,2) < Math.pow(scl / 5, 2)) {
-            socket.emit("shot-landed", {bulletId:value});
+        if (Math.pow(b.pos.x - p.relativePos.x, 2) + Math.pow(b.pos.y - p.relativePos.y, 2) < Math.pow(scl / 5, 2)) {
+            socket.emit("shot-landed", { bulletId: value });
             globalBullets.delete(value);
             p.health -= 5;
 
-            if(p.health <= 0) {
-                p.relativePos.x = width/2;
-                p.relativePos.y = height/2;
+            if (p.health <= 0) {
+                p.relativePos.x = width / 2;
+                p.relativePos.y = height / 2;
                 p.health = 100;
                 xOff = 0;
                 yOff = 0;
-        
-                socket.emit('death',{shooter:b.shooter});
+
+                socket.emit('death', { shooter: b.shooter });
             }
         }
     })
 
 
 
-    for (let i = 0; i < mapKey.length; i++) {
-        const row = mapKey[i];
-        for (let j = 0; j < row.length; j++) {
-            const element = row[j];
-            if (element == 1) {
-                ctx.fillStyle = "black";
-                ctx.fillRect(j * scl + xOff, i * scl + yOff, scl, scl);
-            }
-        }
-    }
 
     if (keys.w && p.canMove(mapKey, 0, -p.speed)) {
         yOff += p.speed;

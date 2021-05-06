@@ -69,7 +69,7 @@ class Bullet{
         this.pos = createVector(x,y);
         this.vel = createVector(vx,vy);
 
-        this.scl = 100;
+        this.scl = scl;
 
         this.id = this.generateID();
 
