@@ -16,21 +16,21 @@ const socket = io()
 const mapKey = [
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
   [1, 2, 2, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 2, 2, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1],
+  [1, 2, 2, 0, 0, 3.5, 3.1, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1],
   [1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1],
   [1, 1, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1],
   [1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1],
-  [1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],
-  [1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 1],
+  [1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3.3, 0, 1, 0, 1],
+  [1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3.4, 1, 0, 1],
   [1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
   [1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1],
   [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
-  [1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1],
+  [1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 3.4, 3.2, 3.4, 1, 0, 1, 0, 1, 0, 1],
   [1, 1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1],
-  [1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1],
+  [1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 3.2, 1],
   [1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
-  [1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
-  [1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+  [1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 3.2, 1, 0, 1],
+  [1, 0, 1, 1, 0, 1, 0, 0, 3.1, 0, 1, 0, 1, 0, 0, 3.1, 0, 3.3, 0, 1],
   [1, 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 0, 1],
   [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
@@ -50,7 +50,11 @@ const keys = {
   d: false
 }
 
+let keyPressed = false
+let displayTutorial = true
+
 document.addEventListener('keydown', (event) => {
+  keyPressed = true
   if (event.key === 'w') {
     keys.w = true
   }
@@ -66,6 +70,7 @@ document.addEventListener('keydown', (event) => {
 })
 
 document.addEventListener('keyup', (event) => {
+  keyPressed = false
   if (event.key === 'w') {
     keys.w = false
   }
@@ -144,8 +149,8 @@ let mouseX
 let mouseY
 
 document.addEventListener('mousemove', (event) => {
-  mouseX = event.x - window.innerWidth / 8
-  mouseY = event.y - window.innerHeight / 8
+  mouseX = event.x - window.innerWidth / 2 + 500
+  mouseY = event.y - window.innerHeight / 2 + 300
 })
 
 document.addEventListener('mousedown', () => {
@@ -165,14 +170,7 @@ function animate () {
     const row = mapKey[i]
     for (let j = 0; j < row.length; j++) {
       const element = row[j]
-      if (element === 1) {
-        ctx.fillStyle = 'black'
-      } else if (element === 2) {
-        ctx.fillStyle = 'rgb(0,255,0)'
-      } else if (element === 0) {
-        ctx.fillStyle = 'rgb(199,199,199)'
-      }
-      ctx.fillRect(j * scl + xOff, i * scl + yOff, scl, scl)
+      displayBlock(element, j * scl + xOff, i * scl + yOff, scl, scl, ctx)
     }
   }
 
@@ -188,9 +186,29 @@ function animate () {
     b.display(ctx, xOff, yOff)
     b.update()
 
-    // Check for bllet collisions
-    if (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)] > 0) {
-      p.gun.bullets.delete(value)
+    switch (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)]) {
+      case 0:
+        break
+      case 1:
+        p.gun.bullets.delete(value)
+        break
+      case 2:
+        p.gun.bullets.delete(value)
+        break
+      case 3.1:
+        if (b.vel.x < 0) { p.gun.bullets.delete(value) }
+        break
+      case 3.2:
+        if (b.vel.y < 0) { p.gun.bullets.delete(value) }
+        break
+      case 3.3:
+        if (b.vel.x > 0) { p.gun.bullets.delete(value) }
+        break
+      case 3.4:
+        if (b.vel.y > 0) { p.gun.bullets.delete(value) }
+        break
+      default:
+        break
     }
   })
 
@@ -200,8 +218,29 @@ function animate () {
     b.update(socket)
 
     // Check for bllet collisions
-    if (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)] > 0) {
-      globalBullets.delete(value)
+    switch (mapKey[Math.floor(b.pos.y / scl)][Math.floor(b.pos.x / scl)]) {
+      case 0:
+        break
+      case 1:
+        globalBullets.delete(value)
+        break
+      case 2:
+        globalBullets.delete(value)
+        break
+      case 3.1:
+        if (b.vel.x < 0) { globalBullets.delete(value) }
+        break
+      case 3.2:
+        if (b.vel.y < 0) { globalBullets.delete(value) }
+        break
+      case 3.3:
+        if (b.vel.x > 0) { globalBullets.delete(value) }
+        break
+      case 3.4:
+        if (b.vel.y > 0) { globalBullets.delete(value) }
+        break
+      default:
+        break
     }
 
     if (Math.pow(b.pos.x - p.relativePos.x, 2) + Math.pow(b.pos.y - p.relativePos.y, 2) < Math.pow(scl / 5, 2)) {
@@ -222,32 +261,54 @@ function animate () {
       }
     }
   })
+  if (!displayTutorial) {
+    if (keys.w && p.canMove(mapKey, 0, -p.speed)) {
+      yOff += p.speed
+      p.relativePos.y -= p.speed
+    }
+    if (keys.s && p.canMove(mapKey, 0, p.speed)) {
+      yOff -= p.speed
+      p.relativePos.y += p.speed
+    }
+    if (keys.a && p.canMove(mapKey, -p.speed, 0)) {
+      xOff += p.speed
+      p.relativePos.x -= p.speed
+    }
+    if (keys.d && p.canMove(mapKey, p.speed, 0)) {
+      xOff -= p.speed
+      p.relativePos.x += p.speed
+    }
 
-  if (keys.w && p.canMove(mapKey, 0, -p.speed)) {
-    yOff += p.speed
-    p.relativePos.y -= p.speed
-  }
-  if (keys.s && p.canMove(mapKey, 0, p.speed)) {
-    yOff -= p.speed
-    p.relativePos.y += p.speed
-  }
-  if (keys.a && p.canMove(mapKey, -p.speed, 0)) {
-    xOff += p.speed
-    p.relativePos.x -= p.speed
-  }
-  if (keys.d && p.canMove(mapKey, p.speed, 0)) {
-    xOff -= p.speed
-    p.relativePos.x += p.speed
-  }
+    const data = {
+      x: p.relativePos.x,
+      y: p.relativePos.y,
+      a: p.angle,
+      h: p.health
+    }
 
-  const data = {
-    x: p.relativePos.x,
-    y: p.relativePos.y,
-    a: p.angle,
-    h: p.health
-  }
+    socket.emit('movement', data)
+  } else {
+    ctx.fillStyle = 'rgba(255,255,255, 0.9)'
+    ctx.fillRect(150, 100, width - 300, height - 200)
+    ctx.font = '48px serif'
+    ctx.fillStyle = 'black'
+    ctx.textAlign = 'center'
+    ctx.fillText('Welcome!', width / 2, 150)
+    ctx.font = '28px serif'
+    ctx.fillText('Chase, evade, and conquer your way to domination!', width / 2, 200)
+    ctx.fillText('Use WASD to move,', width / 2, 250)
+    ctx.fillText('your mouse to aim,', width / 2, 275)
+    ctx.fillText('and click to shoot.', width / 2, 300)
+    ctx.fillText('Avoid getting hit by enemy fire', width / 2, 350)
+    ctx.fillText('and lead the arena in kills.', width / 2, 375)
+    ctx.font = '38px serif'
 
-  socket.emit('movement', data)
+    ctx.fillText('Press any key to begin...', width / 2, 450)
+
+    if (keyPressed) {
+      displayTutorial = false
+    }
+  }
 
   requestAnimationFrame(animate)
 }
