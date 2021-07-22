@@ -148,8 +148,8 @@ var mouseX = undefined;
 var mouseY = undefined;
 
 document.addEventListener('mousemove', (event) => {
-    mouseX = event.x - window.innerWidth/4;
-    mouseY = event.y - window.innerHeight/4;
+    mouseX = event.x - window.innerWidth/8;
+    mouseY = event.y - window.innerHeight/8;
 })
 
 document.addEventListener('mousedown', () => {
