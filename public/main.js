@@ -1,8 +1,10 @@
 const canvas = document.getElementById("canvas1");
 const ctx = canvas.getContext('2d');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+canvas.setAttribute('margin', 'auto')
+
+canvas.width = 1000//window.innerWidth;
+canvas.height = 600//window.innerHeight;
 
 const width = canvas.width;
 const height = canvas.height;
@@ -146,8 +148,8 @@ var mouseX = undefined;
 var mouseY = undefined;
 
 document.addEventListener('mousemove', (event) => {
-    mouseX = event.x;
-    mouseY = event.y;
+    mouseX = event.x - window.innerWidth/4;
+    mouseY = event.y - window.innerHeight/4;
 })
 
 document.addEventListener('mousedown', () => {
@@ -221,7 +223,9 @@ function animate() {
             p.health -= 5;
 
             if (p.health <= 0) {
-                p.relativePos.x = width / 2;
+                // p.pos.x = width /2;
+                // p.pos.y = height/2;
+                p.relativePos.x =  width / 2 //- scl * 3;
                 p.relativePos.y = height / 2;
                 p.health = 100;
                 xOff = 0;

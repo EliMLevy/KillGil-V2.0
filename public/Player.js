@@ -4,7 +4,7 @@ class Player {
         this.scl = scl;
         this.relativePos = createVector(x - this.scl * 3,y - this.scl); //RElative to the world grid
 
-        this.speed = scl / 10;
+        this.speed = scl / 15;
 
         this.angle = 0;
 
