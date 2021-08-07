@@ -1,7 +1,7 @@
 Kill Gil Arena Brawl
 =========
 
-Hi there,
+Hi there,\
 Kill Gil is a web based, multiplayer, platformer game.
 
 The backend is written in Nodejs and uses the Socket.io libary to handle web sockets.
